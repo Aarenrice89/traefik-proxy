@@ -1,0 +1,40 @@
+version: "3.8"
+name: proxy
+
+services:
+  traefik:
+    image: "traefik:v2.10"
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./services/traefik/local-configs:/local-configs:ro"
+      - "./traefik-local.yml:/etc/traefik/traefik.yml"
+      - "./certs/:/certs:ro"
+  certgen:
+    image: superseb/omgwtfssl
+    environment:
+      - CA_SUBJECT=aaren-test
+      - CA_EXPIRE=365
+      - SSL_SUBJECT=*.localhost
+      - SSL_EXPIRE=365
+      - >-
+          SSL_DNS=
+          *.south-bay-specials.localhost,
+    volumes:
+      - "./certs/:/certs"
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+    # https://stackoverflow.com/a/65584498/614770
+      - |
+        /usr/local/bin/generate-certs
+        openssl x509 -outform der -in ca.pem -out ca.crt
+
+# https://docs.docker.com/network/bridge/
+networks:
+  default:
+    name: proxy
+    external: true
