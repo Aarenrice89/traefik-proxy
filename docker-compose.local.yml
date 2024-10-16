@@ -17,7 +17,7 @@ services:
   certgen:
     image: superseb/omgwtfssl
     environment:
-      - CA_SUBJECT=aaren-test
+      - CA_SUBJECT=aaren-local-development
       - CA_EXPIRE=365
       - SSL_SUBJECT=*.localhost
       - SSL_EXPIRE=365

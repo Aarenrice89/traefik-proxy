@@ -1,6 +1,6 @@
 http:
   services:
-    fp_projectname_fe_web:
+    fp_southbayspecials_fe_web:
       loadbalancer:
         servers:
           - url: "http://host.docker.internal:1234"

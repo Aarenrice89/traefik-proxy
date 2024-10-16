@@ -1,8 +1,8 @@
 http:
   routers:
-    fp_projectname_fe_web:
+    fp_southbayspecials_fe_web:
       entrypoints:
         - "websecure"
-      rule: "Host(`web.projectname.localhost`)"
+      rule: "Host(`web.south-bay-specials.localhost`)"
       tls: {}
-      service: fp_projectname_fe_web
+      service: fp_southbayspecials_fe_web
